@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import oAuth.Auth;
 import oAuth.PassManager;
 
 public class Menu implements ActionListener {
@@ -102,6 +103,14 @@ public class Menu implements ActionListener {
 		} else
 		if(e.getActionCommand().equals(CHECK)) {
 			Jira.statBar.setMessage("Loading...");
+			PassManager pman = new PassManager();
+			Auth auth = new Auth();
+			if(auth.createSession(pman.getUsername(), pman.getPassword())) {
+				Jira.statBar.setMessage("Credentials are valid!");
+				Jira.loggedIn();
+			} else {
+				Jira.statBar.setMessage("Invalid credentials!");
+			}
 		}
 	}
 	

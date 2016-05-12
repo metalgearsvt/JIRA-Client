@@ -7,11 +7,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import constants.Constants;
+import gui.Jira;
 import oAuth.Auth;
 import oAuth.GetClient;
 
 public class Search {
 	public static final String PERFPRO_VIEW = "?jql=project%20%3D%20PP%20AND%20resolution%20%3D%20Unresolved%20ORDER%20BY%20severity%20ASC%2C%20priority%20DESC%2C%20created%20DESC";
+	public static final String PROJ_FILTER_PRE = "?jql=project%20%3D%20";
+	public static final String PROJ_FILTER_SUF = "%20ORDER%20BY%20severity%20DESC";
+	public Search() {
+		
+	}
+	
+	public ArrayList<String> getIssuesFromProject(String proj) {
+		String URL = Constants.SEARCH_API + PROJ_FILTER_PRE + proj + PROJ_FILTER_SUF;
+		return getKeysFromSearch(GetClient.getResponse(Jira.auth, URL));
+	}
 	
 	public String perfectProcureView(Auth auth) {
 		String searchURL = Constants.SEARCH_API + PERFPRO_VIEW;
