@@ -20,7 +20,7 @@ public class Search {
 	}
 	
 	public ArrayList<String> getIssuesFromProject(String proj) {
-		String URL = Constants.SEARCH_API + PROJ_FILTER_PRE + proj + PROJ_FILTER_SUF;
+		String URL = Constants.SEARCH_API + PROJ_FILTER_PRE + proj;// + PROJ_FILTER_SUF;
 		return getKeysFromSearch(GetClient.getResponse(Jira.auth, URL));
 	}
 	
@@ -34,7 +34,8 @@ public class Search {
 		Gson gson = new Gson();
 		JsonArray issues = gson.fromJson(json, JsonObject.class).get("issues").getAsJsonArray();
 		for(int i = 0; i < issues.size(); i++) {
-			keys.add(issues.get(i).getAsJsonObject().get("key").getAsString());
+			String keyName = issues.get(i).getAsJsonObject().get("key").getAsString();
+			keys.add(keyName);
 		}
 		return keys;
 	}

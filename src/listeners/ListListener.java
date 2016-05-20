@@ -27,7 +27,7 @@ public class ListListener implements ListSelectionListener {
 		if(!e.getValueIsAdjusting()) {
 			ListListener.project = (JList<String>)e.getSource();
 			Search srch = new Search();
-			JList<String> li = ArrayListToJList.asStringNoLsn(srch.getIssuesFromProject(Group.keyFromGroup(project.getSelectedValue())));
+			JList<String> li = ArrayListToJList.asStringNoLsn(srch.getIssuesFromProject(Group.keyFromGroup(project.getSelectedValue())), 12);
 			JScrollPane jsp = new JScrollPane(li);
 			ExpandProj(jsp);
 			Jira.refresh();

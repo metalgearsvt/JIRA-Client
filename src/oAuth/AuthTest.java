@@ -18,7 +18,7 @@ public class AuthTest {
 		Search search = new Search();
 		ArrayList<String> keys = search.getKeysFromSearch(search.perfectProcureView(auth));
 		for(int i = 0; i < keys.size(); i++) {
-			Issue.printIssue(auth, keys.get(i));
+			Issue.printIssue(keys.get(i));
 		}
 	}
 	

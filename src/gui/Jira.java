@@ -1,9 +1,10 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.net.URL;
 
@@ -25,26 +26,35 @@ public class Jira {
 	public static Status statBar = new Status();
 	
 	public static final String[] NO_ACTIONS = { "Invalid Credentials" };
-	public static final String[] DEFAULT_ACTIONS = { "Select an action...", "Projects..." };
+	public static final String[] DEFAULT_ACTIONS = { "Select an action...", "Projects...", "PerfectProcure" };
 	
 	public static JFrame mainFrame = new JFrame();
 	public static JComboBox<String> navBox = new JComboBox<String>(NO_ACTIONS);
 	public static JPanel displayPanel = new JPanel();
 	public static JPanel infoPanel = new JPanel();
+	public static JPanel infDisP = new JPanel();
 	
 	public static Auth auth = new Auth();
 	public static PassManager pMan = new PassManager();
 	
-	public static int w = 750;
-	public static int h = 500;
+	public static int w = 1000;
+	public static int h = 700;
 	
 	public static void main(String[] args) {
 		
-		boolean loggedIn = auth.createSession(pMan.getUsername(), pMan.getPassword());
+		//boolean loggedIn = auth.createSession(pMan.getUsername(), pMan.getPassword());
 		
+		@SuppressWarnings("unused")
 		GridBagLayout gridLay = new GridBagLayout();
 		
-		displayPanel.setLayout(gridLay);
+		mainFrame.getContentPane().setLayout(new GridLayout(1, 1));
+		
+		infoPanel.setLayout(new FlowLayout());		
+		
+		GridBagLayout grid = new GridBagLayout();
+		
+		displayPanel.setLayout(grid);
+		
 		
 		mainFrame.setSize(w, h);
 		mainFrame.setPreferredSize(new Dimension(w, h));
@@ -53,12 +63,10 @@ public class Jira {
 		URL iconURL = Jira.class.getClass().getResource(iconLocation);
 		ImageIcon icon = new ImageIcon(iconURL);
 		mainFrame.setIconImage(icon.getImage());
-		
-		mainFrame.getContentPane().add(statBar, BorderLayout.SOUTH);
 
-		if(loggedIn) {
+		//if(loggedIn) {
 			navBox = new JComboBox<String>(DEFAULT_ACTIONS);
-		}
+		//}
 		
 		mainFrame.getContentPane().add(displayPanel);
 		
@@ -86,21 +94,50 @@ public class Jira {
 		GridBagConstraints mainItems = new GridBagConstraints();
 
 		mainItems.anchor = GridBagConstraints.NORTH;
-		mainItems.fill = GridBagConstraints.HORIZONTAL;
 		mainItems.gridwidth = GridBagConstraints.REMAINDER;
 		mainItems.weightx = 1;
 		mainItems.weighty = 0.2;
 		
-		displayPanel.add(actionBarPanel, mainItems);
+		GridBagConstraints dpc = new GridBagConstraints();
+		
+		dpc.anchor = GridBagConstraints.NORTH;
+		dpc.gridwidth = GridBagConstraints.REMAINDER;
+		dpc.weightx = 1;
+		dpc.weighty = 0.1;
+		dpc.gridheight = 1;
+		
+		displayPanel.add(actionBarPanel, dpc);
 		
 		mainItems.anchor = GridBagConstraints.FIRST_LINE_START;
 		mainItems.fill = GridBagConstraints.HORIZONTAL;
 		mainItems.gridwidth = GridBagConstraints.REMAINDER;
+		mainItems.gridheight = GridBagConstraints.RELATIVE;
 		mainItems.weightx = 1;
-		mainItems.weighty = 0.8;
+		mainItems.weighty = 0.2;
 		
-		displayPanel.add(infoPanel, mainItems);
-		gridLay.layoutContainer(displayPanel);
+		dpc.anchor = GridBagConstraints.NORTHWEST;
+		dpc.fill = GridBagConstraints.BOTH;
+		dpc.gridwidth = GridBagConstraints.REMAINDER;
+		dpc.gridheight = GridBagConstraints.RELATIVE;
+		dpc.weightx = 1;
+		dpc.weighty = 0.8;
+		
+		displayPanel.add(infoPanel, dpc);
+		//gridLay.layoutContainer(displayPanel);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.anchor = GridBagConstraints.SOUTH;
+		
+		dpc.anchor = GridBagConstraints.NORTHWEST;
+		dpc.fill = GridBagConstraints.HORIZONTAL;
+		dpc.gridwidth = GridBagConstraints.REMAINDER;
+		dpc.gridheight = 1;
+		dpc.weightx = 1;
+		dpc.weighty = 0.00;
+		
+		displayPanel.add(statBar, dpc);
 		
 		mainFrame.setVisible(true);
 		

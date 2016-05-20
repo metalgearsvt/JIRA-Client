@@ -20,7 +20,7 @@ public class ArrayListToJList {
 		list.addListSelectionListener(new ListListener());
 		return list;
 	}
-	public static JList<String> asStringNoLsn(ArrayList<String> al) {
+	public static JList<String> asStringNoLsn(ArrayList<String> al, int display) {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		for(int i = 0; i < al.size(); i++) {
 			listModel.addElement(al.get(i));
@@ -28,6 +28,11 @@ public class ArrayListToJList {
 		JList<String> list = new JList<String>(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
+		list.setVisibleRowCount(display);
 		return list;
+	}
+	
+	public static JList<String> asStringNoLsn(ArrayList<String> al) {
+		return asStringNoLsn(al, 8);
 	}
 }
